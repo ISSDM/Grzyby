@@ -36,7 +36,7 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Email already registered")
     hashed_pw = get_password_hash(user.password)
     user = crud.create_user(db, user.email, hashed_pw)
-    token = create_access_token(data={"sub": user.email})
+    token = create_access_token(user.email)
     return {"access_token": token, "token_type": "bearer"}
 
 @app.post("/login", response_model=Token)

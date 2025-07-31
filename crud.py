@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 from models import Mushroom
 from schemas import MushroomCreate, MushroomUpdate
 from typing import List, Optional
+from models import User
 
 def create_mushroom(db: Session, mushroom: MushroomCreate, user_id: int):
     db_mushroom = Mushroom(**mushroom.dict(), owner_id=user_id)
@@ -38,3 +39,13 @@ def delete_mushroom(db: Session, mushroom_id: int):
     db.delete(db_mushroom)
     db.commit()
     return db_mushroom
+
+def get_user_by_email(db: Session, email: str):
+    return db.query(User).filter(User.email == email).first()
+
+def create_user(db: Session, email: str, hashed_password: str):
+    user = User(email=email, hashed_password=hashed_password)
+    db.add(user)
+    db.commit()
+    db.refresh(user)
+    return user
