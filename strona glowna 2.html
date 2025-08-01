@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Inwentaryzacja Grzybów</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f8f3ed;
+    }
+    header {
+      background-color: #593b24;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+    header nav a {
+      color: white;
+      margin-left: 1rem;
+      text-decoration: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    main {
+      padding: 2rem;
+    }
+    h2 {
+      color: #333;
+    }
+    .filters, .form-field {
+      margin-bottom: 1rem;
+    }
+    select, input, textarea {
+      padding: 0.5rem;
+      width: 100%;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+    }
+    th, td {
+      padding: 1rem;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+    th {
+      background-color: #e5e5e5;
+    }
+    .info-box {
+      margin-top: 2rem;
+      padding: 1rem;
+      background-color: #fff6d5;
+      border-left: 5px solid orange;
+    }
+    .info-box a {
+      font-weight: bold;
+      text-decoration: underline;
+      color: #000;
+      cursor: pointer;
+    }
+    .hidden {
+      display: none;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      margin-right: 1rem;
+      background-color: #593b24;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .btn-light {
+      background-color: #ccc;
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🍄 Inwentaryzacja Grzybów</h1>
+  <nav>
+    <a onclick="showView('home')">Strona główna</a>
+    <a onclick="showView('login')">Zaloguj się</a>
+    <a onclick="showView('register')">Stwórz konto</a>
+    <a onclick="showView('dashboard')">Dashboard</a>
+    <a onclick="showView('add')">Dodaj grzyba</a>
+  </nav>
+</header>
+
+<main>
+  <!-- Strona główna -->
+  <section id="home">
+    <h2>Witamy!</h2>
+    <p>Oglądasz publiczną listę grzybów. Zaloguj się, by edytować lub dodawać nowe.</p>
+
+    <div class="filters">
+      <select><option>Kategoria</option></select>
+      <select><option>Status</option></select>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Nazwa</th>
+          <th>Kategoria</th>
+          <th>Ilość</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Muchomor czerwony</td>
+          <td>Trujący</td>
+          <td>4</td>
+          <td>Mało</td>
+        </tr>
+        <tr>
+          <td>Borowik szlachetny</td>
+          <td>Jadalny</td>
+          <td>10</td>
+          <td>Dostępny</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="info-box">
+      🔒 Aby dodać lub edytować grzyby, <a onclick="showView('login')">zaloguj się</a> lub <a onclick="showView('register')">stwórz konto</a>.
+    </div>
+  </section>
+
+  <!-- Logowanie -->
+  <section id="login" class="hidden">
+    <h2>Zaloguj się</h2>
+    <div class="form-field"><input type="email" placeholder="Email"></div>
+    <div class="form-field"><input type="password" placeholder="Hasło"></div>
+    <a onclick="showView('reset')">Nie pamiętasz hasła?</a><br><br>
+    <button onclick="showView('dashboard')">Zaloguj się</button>
+    <button class="btn-light" onclick="showView('register')">Zarejestruj się</button>
+  </section>
+
+  <!-- Rejestracja -->
+  <section id="register" class="hidden">
+    <h2>Rejestracja</h2>
+    <div class="form-field"><input type="email" placeholder="Email"></div>
+    <div class="form-field"><input type="password" placeholder="Hasło"></div>
+    <div class="form-field"><input type="password" placeholder="Potwierdź hasło"></div>
+    <div class="form-field"><input type="text" placeholder="Imię i nazwisko (opcjonalnie)"></div>
+    <label><input type="checkbox"> Akceptuję regulamin</label><br><br>
+    <button onclick="showView('dashboard')">Zarejestruj się</button>
+    <button class="btn-light" onclick="showView('login')">Mam już konto</button>
+  </section>
+
+  <!-- Dashboard -->
+  <section id="dashboard" class="hidden">
+    <h2>Moje Grzyby</h2>
+    <div class="filters">
+      <select><option>Kategoria</option></select>
+      <select><option>Data dodania</option></select>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Nazwa</th>
+          <th>Kategoria</th>
+          <th>Status</th>
+          <th>Ilość</th>
+          <th>Lokalizacja</th>
+          <th>Akcje</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Maślak żółty</td>
+          <td>Jadalny</td>
+          <td>Dostępny</td>
+          <td>7</td>
+          <td>Las sosnowy</td>
+          <td>
+            <button onclick="showView('edit')">Edytuj</button>
+            <button>🗑 Usuń</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <button onclick="showView('add')">➕ Dodaj</button>
+    <button class="btn-light" onclick="showView('home')">🚪 Wyloguj się</button>
+  </section>
+
+  <!-- Dodawanie / Edycja -->
+  <section id="add" class="hidden">
+    <h2>Dodaj / Edytuj Grzyba</h2>
+    <div class="form-field"><input type="text" placeholder="Nazwa grzyba"></div>
+    <div class="form-field"><textarea placeholder="Opis"></textarea></div>
+    <div class="form-field">
+      <select>
+        <option>Kategoria</option>
+        <option>Trujący</option>
+        <option>Jadalny</option>
+        <option>Chroniony</option>
+        <option>Rzadki</option>
+      </select>
+    </div>
+    <div class="form-field"><input type="number" placeholder="Ilość"></div>
+    <div class="form-field">
+      <select>
+        <option>Status zapasu</option>
+        <option>Dostępny</option>
+        <option>Mało</option>
+        <option>Brak</option>
+      </select>
+    </div>
+    <div class="form-field"><input type="date" placeholder="Data dodania"></div>
+    <button onclick="showView('dashboard')">💾 Zapisz</button>
+    <button class="btn-light" onclick="showView('dashboard')">Wróć do listy</button>
+  </section>
+</main>
+
+<script>
+  function showView(viewId) {
+    const sections = document.querySelectorAll('main > section');
+    sections.forEach(s => s.classList.add('hidden'));
+    document.getElementById(viewId).classList.remove('hidden');
+  }
+</script>
+
+</body>
+</html>
